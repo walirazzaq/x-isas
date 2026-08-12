@@ -1,0 +1,96 @@
+{
+  "name": "x-isas",
+  "version": "0.1.0",
+  "description": "Alpine-first structural and functional components for ordinary HTML elements.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./core": {
+      "import": "./dist/core.js",
+      "require": "./dist/core.cjs"
+    },
+    "./calendar": {
+      "import": "./dist/calendar.js",
+      "require": "./dist/calendar.cjs"
+    },
+    "./upload": {
+      "import": "./dist/upload.js",
+      "require": "./dist/upload.cjs"
+    },
+    "./adapters/daisyui": {
+      "import": "./dist/adapters/daisyui/index.js",
+      "require": "./dist/adapters/daisyui/index.cjs"
+    },
+    "./adapters/daisyui/styles.css": "./src/adapters/daisyui/styles.css",
+    "./styles.css": "./src/adapters/daisyui/styles.css"
+  },
+  "files": [
+    "dist",
+    "src/adapters/**/*.css"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:boundary": "node ./scripts/check-boundaries.mjs",
+    "test:package": "npm run build && node ./scripts/test-package.mjs",
+    "test:browser": "npm run build && playwright test --config playwright.standalone.config.js",
+    "test:livewire": "npm run build && npm run fixture:livewire:install && playwright test --config playwright.livewire.config.js",
+    "test:ci": "npm run build && npm run test:boundary && npm run test:unit && node ./scripts/test-package.mjs && playwright test --config playwright.standalone.config.js && npm run fixture:livewire:install && playwright test --config playwright.livewire.config.js",
+    "fixture:standalone": "vite --config tests/fixtures/standalone/vite.config.js",
+    "fixture:livewire": "vite --config tests/fixtures/livewire/vite.config.js",
+    "fixture:livewire:install": "node ./scripts/install-livewire-fixture.mjs"
+  },
+  "keywords": [
+    "alpinejs",
+    "directives",
+    "components",
+    "attachments",
+    "x-is",
+    "x-part",
+    "x-as"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@floating-ui/dom": "^1.7.4",
+    "@internationalized/date": "3.8.2",
+    "@zag-js/date-picker": "1.42.0",
+    "@zag-js/file-upload": "1.42.0",
+    "@zag-js/vanilla": "1.42.0"
+  },
+  "peerDependencies": {
+    "@alpinejs/morph": "^3.15.12",
+    "alpinejs": "^3.15.12",
+    "daisyui": "^5.7.0",
+    "tailwindcss": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "daisyui": {
+      "optional": true
+    },
+    "tailwindcss": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@egoist/tailwindcss-icons": "^1.9.2",
+    "@iconify-json/tabler": "^1.2.35",
+    "@alpinejs/morph": "^3.15.12",
+    "@playwright/test": "^1.62.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "alpinejs": "^3.15.12",
+    "daisyui": "^5.7.0",
+    "happy-dom": "^20.10.6",
+    "laravel-vite-plugin": "^2.0.0",
+    "tailwindcss": "^4.0.0",
+    "vite": "^7.1.3",
+    "vitest": "^4.1.10"
+  }
+}

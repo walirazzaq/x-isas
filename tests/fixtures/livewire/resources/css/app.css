@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "@egoist/tailwindcss-icons" {
+    prefixes: tabler;
+}
+@import "x-isas/styles.css";
+
+@source "../views";
+@source "../../../../../src";

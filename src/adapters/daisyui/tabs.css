@@ -1,0 +1,7 @@
+.tabs[data-isas-tabs-visibility="manual"] > .tab-content {
+    display: block;
+}
+
+.tabs[data-isas-tabs-visibility="manual"] > .tab-content[hidden] {
+    display: none;
+}

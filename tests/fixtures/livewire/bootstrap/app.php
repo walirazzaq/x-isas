@@ -1,0 +1,15 @@
+<?php
+
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
+
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(web: __DIR__.'/../routes/web.php')
+    ->withMiddleware(function (Middleware $middleware): void {
+        // This fixture intentionally uses only Laravel's web defaults.
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
+        // Browser failures should surface through Laravel's normal handler.
+    })
+    ->create();

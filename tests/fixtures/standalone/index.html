@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>x-isas standalone contract fixture</title>
+    <script type="module" src="/app.js"></script>
+</head>
+<body class="min-h-screen bg-base-200 p-6">
+    <main class="mx-auto grid max-w-5xl gap-8" x-data="{ completed: '', submitted: '' }">
+        <section data-testid="surfaces" class="flex flex-wrap gap-3">
+            <button x-is="button" controls-dropdown="actions" data-testid="dropdown-trigger">
+                Actions
+            </button>
+            <div id="actions" x-is="dropdown" class="rounded-box border bg-base-100 p-3">
+                <button type="button" @click="$dropdown.hide()" data-testid="dropdown-close">Close</button>
+            </div>
+
+            <button x-is="button" controls-dialog="settings" data-testid="dialog-trigger">
+                Settings
+            </button>
+            <dialog x-is="dialog" id="settings" closedby="any" aria-labelledby="settings-title">
+                <section x-part="content">
+                    <h2 id="settings-title">Settings</h2>
+                    <input aria-label="Dialog value" value="preserved">
+                    <button type="button" @click="$dialog.close('saved')" data-testid="dialog-close">Save</button>
+                </section>
+            </dialog>
+
+            <button x-is="button" controls-overlay="adaptive" data-testid="overlay-trigger">
+                Adaptive
+            </button>
+            <dialog x-is="overlay" id="adaptive" breakpoint="lg" aria-label="Adaptive fixture">
+                <section x-part="content">
+                    <input aria-label="Overlay query" value="stable">
+                    <button type="button" @click="$overlay.hide()">Done</button>
+                </section>
+            </dialog>
+        </section>
+
+        <form
+            data-testid="native-form"
+            class="grid gap-4"
+            @submit.prevent="submitted = new FormData($el).get('email')"
+        >
+            <div
+                x-is="input-field"
+                label="Email"
+                support="Required for notifications"
+                native:name="email"
+                native:type="email"
+                native:required
+                native:value="fixture@example.com"
+            ></div>
+            <label
+                x-is="otp"
+                length="4"
+                native:name="code"
+                native:aria-label="Verification code"
+                @complete="completed = $event.detail.value"
+            ></label>
+            <button x-is="button" type="submit">Submit</button>
+            <output data-testid="submitted" x-text="submitted"></output>
+            <output data-testid="completed" x-text="completed"></output>
+        </form>
+
+        <section x-data="{ section: 'overview' }">
+            <div x-is="tabs" x-model="section" aria-label="Fixture tabs" data-testid="tabs">
+                <button x-part="tab" name="overview">Overview</button>
+                <section x-part="tab-content" name="overview">Overview panel</section>
+                <button x-part="tab" name="security">Security</button>
+                <section x-part="tab-content" name="security">Security panel</section>
+            </div>
+            <output data-testid="tab-value" x-text="section"></output>
+        </section>
+
+        <section x-data="{ date: '2026-08-12' }">
+            <div x-is="calendar" x-model="date" today="2026-08-04" name="release_date"></div>
+            <output data-testid="calendar-value" x-text="date"></output>
+        </section>
+
+        <section>
+            <div x-is="file-upload" name="documents[]" multiple data-testid="file-upload"></div>
+        </section>
+    </main>
+</body>
+</html>

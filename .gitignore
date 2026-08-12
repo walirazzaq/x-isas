@@ -1,0 +1,11 @@
+node_modules
+dist
+playwright-report
+test-results
+tests/fixtures/livewire/.env
+tests/fixtures/livewire/public/build
+tests/fixtures/livewire/public/hot
+tests/fixtures/livewire/storage/framework/cache/data/*
+tests/fixtures/livewire/storage/framework/sessions/*
+tests/fixtures/livewire/storage/framework/views/*
+tests/fixtures/livewire/vendor

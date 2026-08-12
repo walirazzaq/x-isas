@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>x-isas POC</title>
+    <style>
+        :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+        body { margin: 0 auto; max-width: 48rem; padding: 3rem 1.5rem; }
+        main { display: grid; gap: 2rem; }
+        button, article { border: 1px solid #8888; border-radius: .5rem; padding: .75rem 1rem; }
+        code { background: #8882; border-radius: .25rem; padding: .1rem .3rem; }
+    </style>
+</head>
+<body>
+    <main x-data="{ clicks: 0 }">
+        <h1><code>x-is</code> primitive components</h1>
+
+        <button
+            x-is="button"
+            class="explicit-class"
+            color="primary"
+            size="xs"
+            variant="soft"
+            icon="i-tabler-info-circle"
+            icon:class="animate-pulse"
+            @click="clicks++"
+        >
+            Click Me
+            <span x-is="badge" color="primary" size="xs" slot="append" x-text="clicks"></span>
+        </button>
+
+        <span x-is="badge" color="success" variant="outline"
+            icon="i-tabler-check" icon-end="i-tabler-chevron-right">
+            Badge accessories
+        </span>
+
+        <article x-is="notice-card:notice" status="pass-through">
+            Host: <strong x-text="$host.status"></strong>
+            Explicit namespace: <strong x-text="notice.status"></strong>
+        </article>
+
+        <article x-as="demo-status:status" status="functional-only">
+            Stable host: <strong x-text="$host.status"></strong>
+            Attachment: <strong x-text="status.describe()"></strong>
+        </article>
+    </main>
+
+    <script type="module" src="/src/demo.js"></script>
+</body>
+</html>
