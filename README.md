@@ -517,6 +517,8 @@ the authored target and `modal-box` to its content part. Consumers own
     color="primary"
     size="xs"
     variant="soft"
+    shape="circle"
+    active
     icon="i-tabler-info-circle"
     icon:class="animate-pulse"
     icon-end="i-tabler-chevron-right"
@@ -528,11 +530,18 @@ the authored target and `modal-box` to its content part. Consumers own
 The button remains a native `<button>`. Its adapter adds `btn`, recognized
 `btn-{color}`, `btn-{size}`, and `btn-{variant}` classes before
 `explicit-class`. Supported variants are `outline`, `dash`, `soft`, `ghost`,
-and `link`. `icon` is promoted into the prepend wrapper and `icon-end` into the
-append wrapper. Their namespaced attributes target each generated icon, while
-`prepend:*` and `append:*` target the wrappers. The adapter supplies the
-wrappers' inline-flex alignment classes. Explicit slot content wins over its
-matching convenience prop.
+and `link`. `shape="square|circle"`, `wide`, `block`, and `active` apply the
+matching DaisyUI modifiers. `icon` is promoted into the prepend wrapper and
+`icon-end` into the append wrapper. Their namespaced attributes target each
+generated icon, while `prepend:*` and `append:*` target the wrappers. The
+adapter supplies the wrappers' inline-flex alignment classes. Explicit slot
+content wins over its matching convenience prop.
+
+The boolean `loading` attribute adds a DaisyUI spinner and `aria-busy="true"`
+without implicitly disabling the native button. While loading, the spinner
+replaces a generated leading `icon` and is inserted before authored prepend
+content. Removing `loading` restores the generated icon; use `disabled`
+separately when repeat activation must be prevented.
 
 ### Alert
 

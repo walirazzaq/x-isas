@@ -28,7 +28,7 @@ const VARIANT_CLASSES = Object.freeze({
 });
 
 export function buttonAdapter({ attrs, slots }) {
-    return variantAdapter({
+    const adapted = variantAdapter({
         attrs,
         slots,
         base: 'btn',
@@ -37,4 +37,16 @@ export function buttonAdapter({ attrs, slots }) {
         variants: VARIANT_CLASSES,
         accessories: true,
     });
+
+    adapted.host.class.push(
+        { square: 'btn-square', circle: 'btn-circle' }[attrs.get('shape')] ?? '',
+        attrs.boolean('wide') ? 'btn-wide' : '',
+        attrs.boolean('block') ? 'btn-block' : '',
+        attrs.boolean('active') ? 'btn-active' : '',
+    );
+    if (attrs.boolean('loading') && !adapted.parts.prepend) {
+        adapted.parts.prepend = { class: 'inline-flex items-center justify-center' };
+    }
+
+    return adapted;
 }

@@ -65,6 +65,85 @@ describe('primitive components and slots', () => {
         expect(host.textContent).toContain('Click Me');
     });
 
+    it('maps button shape, width, and active modifiers and removes stale classes', async () => {
+        const host = mount(`
+            <button x-is="button" shape="circle" wide active>Action</button>
+        `);
+        await tick();
+
+        expect(host.classList.contains('btn-circle')).toBe(true);
+        expect(host.classList.contains('btn-wide')).toBe(true);
+        expect(host.classList.contains('btn-active')).toBe(true);
+
+        host.setAttribute('shape', 'square');
+        host.removeAttribute('wide');
+        host.removeAttribute('active');
+        host.setAttribute('block', '');
+        await tick();
+
+        expect(host.classList.contains('btn-circle')).toBe(false);
+        expect(host.classList.contains('btn-wide')).toBe(false);
+        expect(host.classList.contains('btn-active')).toBe(false);
+        expect(host.classList.contains('btn-square')).toBe(true);
+        expect(host.classList.contains('btn-block')).toBe(true);
+    });
+
+    it('renders an accessible loading spinner without implicitly disabling the button', async () => {
+        const host = mount(`
+            <button x-is="button" loading icon="i-tabler-download" icon-end="i-tabler-arrow-right">
+                Download
+            </button>
+        `);
+        await tick();
+
+        expect(host.getAttribute('aria-busy')).toBe('true');
+        expect(host.disabled).toBe(false);
+        expect(host.querySelector('.loading.loading-spinner')).not.toBeNull();
+        expect(host.querySelector('.loading').parentElement.className)
+            .toBe('inline-flex items-center justify-center');
+        expect(host.querySelector('.i-tabler-download')).toBeNull();
+        expect(host.querySelector('.i-tabler-arrow-right')).not.toBeNull();
+
+        host.removeAttribute('loading');
+        await tick();
+
+        expect(host.hasAttribute('aria-busy')).toBe(false);
+        expect(host.querySelector('.loading')).toBeNull();
+        expect(host.querySelector('.i-tabler-download')).not.toBeNull();
+    });
+
+    it('aligns a loading spinner when it is the only leading accessory', async () => {
+        const host = mount('<button x-is="button" loading>Loading</button>');
+        await tick();
+
+        expect(host.firstElementChild.className)
+            .toBe('inline-flex items-center justify-center');
+        expect(host.firstElementChild.firstElementChild.className)
+            .toBe('loading loading-spinner');
+    });
+
+    it('preserves authored prepend content while loading', async () => {
+        const host = mount(`
+            <button x-is="button" loading icon="i-tabler-download">
+                <strong slot="prepend">New</strong>
+                Download
+            </button>
+        `);
+        await tick();
+
+        const prepend = host.firstElementChild;
+        expect(prepend.querySelector('.loading.loading-spinner')).not.toBeNull();
+        expect(prepend.querySelector('strong').textContent).toBe('New');
+        expect(prepend.querySelector('.i-tabler-download')).toBeNull();
+
+        host.removeAttribute('loading');
+        await tick();
+
+        expect(host.querySelector('.loading')).toBeNull();
+        expect(host.querySelector('strong').textContent).toBe('New');
+        expect(host.querySelector('.i-tabler-download')).toBeNull();
+    });
+
     it('replaces stale mapped classes without disturbing authored or externally resolved classes', async () => {
         const root = mount(`
             <div x-data="{ currentColor: 'primary', currentVariant: 'soft' }">
