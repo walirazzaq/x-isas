@@ -36,7 +36,7 @@ Review the following items before release.
   non-dialog overlay fallbacks do not yet implement complete Escape and
   outside-pointer dismissal.
 - Native dialogs and DaisyUI currently provide scroll locking in the supported
-  DDEV browsers. The previously discussed reference-counted scroll-lock
+  browsers. The previously discussed reference-counted scroll-lock
   fallback, including duplicate-lock detection, has not been implemented.
 - The missing-accessible-name warning runs during initial mounting. An adaptive
   overlay that initially renders as a dropdown and later changes to dialog
@@ -63,7 +63,7 @@ Before declaring the surface API stable:
    public API.
 3. Add coverage for any retained compatibility branches.
 4. Run package tests and production builds.
-5. Run Laravel and Playwright acceptance tests against the configured DDEV
+5. Run Laravel and Playwright acceptance tests against the configured Laragon
    endpoint.
 6. Perform the documented real-device Android Back smoke test when a reachable
    device environment is available.
